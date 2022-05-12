@@ -19,7 +19,7 @@ from app.error_handlers import error_handlers
 from app.logging_config import log_con, LOGGING_CONFIG
 from app.map import map
 from app.simple_pages import simple_pages
-
+from app.transactions import transactions
 
 mail = Mail()
 
@@ -55,7 +55,7 @@ def create_app():
     # app.register_blueprint(songs)
     app.register_blueprint(map)
     app.context_processor(utility_text_processors)
-
+    app.register_blueprint(transactions)
     # add command function to cli commands
     app.cli.add_command(create_database)
     app.cli.add_command(create_log_folder)
