@@ -8,6 +8,11 @@ from flask_login import UserMixin
 from sqlalchemy_serializer import SerializerMixin
 Base = declarative_base()
 
+location_user = db.Table('location_user', db.Model.metadata,
+    db.Column('user_id', db.Integer, db.ForeignKey('users.id')),
+    db.Column('location_id', db.Integer, db.ForeignKey('locations.id'))
+)
+
 class Location(db.Model, SerializerMixin):
     __tablename__ = 'locations'
     id = db.Column(db.Integer, primary_key=True)
