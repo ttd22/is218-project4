@@ -106,4 +106,4 @@ class User(UserMixin, db.Model):
         return self.balance
 
     def add_balance(self, amount):
-        self.balance = self.balance + amount
+        self.balance = self.balance + int(amount)

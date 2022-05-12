@@ -58,6 +58,7 @@
                                 {% if current_user.is_admin %}
                                     <li><a class="dropdown-item" href="{{ url_for("auth.users.browse_users") }}">User Mgmt</a></li>
                                     <li><a class="dropdown-item" href="{{ url_for("map.browse_locations") }}">Loc Mgmt</a></li>
+                                    <li><a class="dropdown-item" href="{{ url_for("transactions.transactions_browse") }}">Tran Mgmt</a></li>
                                     <li><a class="dropdown-item" href="{{ url_for("map.browse_locations_datatables") }}">Loc Mgmt(dt)</a></li>
 
 

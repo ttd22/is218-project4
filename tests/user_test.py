@@ -1,7 +1,7 @@
 import logging
 
 from app import db
-from app.db.models import User
+from app.db.models import User, Transactions
 from faker import Faker
 
 def test_adding_user(application):
@@ -22,22 +22,26 @@ def test_adding_user(application):
         log.info(user)
         #asserting that the user retrieved is correct
         assert user.email == 'ttd22@njit.edu'
-        # #this is how you get a related record ready for insert
-        # user.songs= [Song("Dynamite","BTS",2020,"Disco Pop"),Song("Spring Day","BTS",2016,"Ballad")]
-        # #commit is what saves the songs
-        # db.session.commit()
-        # assert db.session.query(Song).count() == 2
-        # song1 = Song.query.filter_by(title='Dynamite').first()
-        # assert song1.title == "Dynamite"
-        # #changing the title of the song
-        # song1.title = "SuperSongTitle"
-        # #saving the new title of the song
-        # db.session.commit()
-        # song2 = Song.query.filter_by(title='SuperSongTitle').first()
-        # assert song2.title == "SuperSongTitle"
-        # #checking cascade delete
-        # db.session.delete(user)
-        # assert db.session.query(User).count() == 0
-        # assert db.session.query(Song).count() == 0
+        # Adding user transactions
+        user.transactions = [Transactions("200", "CREDIT"), Transactions("2000", "CREDIT")]
+        db.session.commit()
+        # transaction_count = db.session.query(Transactions).count()
+        # assert db.session.query(Transactions).count() == transaction_count + 2
+
+        # Checking transaction changes #1
+        transaction1 = Transactions.query.filter_by(type='CREDIT').first()
+        assert transaction1.type == "CREDIT"
+        transaction1.amount = "200"
+        db.session.commit()
+
+        # Checking transaction changes #2
+        transaction2 = Transactions.query.filter_by(amount='2000').first()
+        assert transaction2.type == "CREDIT"
+
+        # checking cascade delete
+        db.session.delete(user)
+        # assert db.session.query(User).count() == user_count
+        # assert db.session.query(Transactions).count() == transaction_count
+
 
 
